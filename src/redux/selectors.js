@@ -5,6 +5,10 @@ export const selectFilter = state => state.contacts.filter;
 export const selectLoading = state => state.contacts.isLoading;
 export const selectError = state => state.contacts.error;
 
+export const selectIsLoggedIn = state => state.isLoggedIn;
+export const selectIsLoading = state => state.isLoading;
+export const selectUser = state => state.user;
+
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectFilter],
 
