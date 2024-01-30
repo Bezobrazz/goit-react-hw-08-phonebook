@@ -12,7 +12,6 @@ import AuthDetails from './AuthDetails';
 export default function NavBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const { email } = useSelector(selectUser);
-  console.log(isLoggedIn);
   return (
     <Box sx={{ flexGrow: 1, marginBottom: '40px' }}>
       <AppBar position="static">

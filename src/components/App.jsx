@@ -1,62 +1,82 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ContactsPage from 'pages/ContactsPage';
-import Home from 'pages/Home';
-import Login from 'pages/Login';
-import Layout from './Layout';
-import Register from 'pages/Register';
 import { refreshThunk } from '../redux/operations';
-import PublicRoute from 'routes/PublicRoute';
-import PrivateRoute from 'routes/PrivateRoute';
 import { selectIsRefreshing } from '../redux/selectors';
 import { Box } from '@mui/system';
 import { CircularProgress } from '@mui/material';
+import Layout from './Layout';
+import PublicRoute from 'routes/PublicRoute';
+import PrivateRoute from 'routes/PrivateRoute';
+
+const LazyContactsPage = lazy(() => import('pages/ContactsPage'));
+const LazyHome = lazy(() => import('pages/Home'));
+const LazyLogin = lazy(() => import('pages/Login'));
+const LazyRegister = lazy(() => import('pages/Register'));
 
 const App = () => {
   const isRefreshing = useSelector(selectIsRefreshing);
-  console.log(isRefreshing);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(refreshThunk());
   }, [dispatch]);
 
-  return isRefreshing ? (
-    <Box
-      sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+  return (
+    <Suspense
+      fallback={
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      }
     >
-      <CircularProgress />
-    </Box>
-  ) : (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route
-          path="contacts"
-          element={
-            <PrivateRoute>
-              <ContactsPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="login"
-          element={
-            <PublicRoute>
-              <Login />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="register"
-          element={
-            <PublicRoute>
-              <Register />
-            </PublicRoute>
-          }
-        />
-      </Route>
-    </Routes>
+      {isRefreshing ? (
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : (
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<LazyHome />} />
+            <Route
+              path="contacts"
+              element={
+                <PrivateRoute>
+                  <LazyContactsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="login"
+              element={
+                <PublicRoute>
+                  <LazyLogin />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="register"
+              element={
+                <PublicRoute>
+                  <LazyRegister />
+                </PublicRoute>
+              }
+            />
+          </Route>
+        </Routes>
+      )}
+    </Suspense>
   );
 };
 

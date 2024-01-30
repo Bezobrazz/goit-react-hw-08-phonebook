@@ -1,11 +1,8 @@
 import React from 'react';
 import { Button, Typography, Box, Container } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../redux/selectors';
 
 function Home() {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
     <Container>
       <Box
