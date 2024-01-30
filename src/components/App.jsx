@@ -7,6 +7,8 @@ import Layout from './Layout';
 import Register from 'pages/Register';
 import { useDispatch } from 'react-redux';
 import { refreshThunk } from '../redux/operations';
+import PublicRoute from 'routes/PublicRoute';
+import PrivateRoute from 'routes/PrivateRoute';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -18,9 +20,30 @@ const App = () => {
     <Routes>
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="contacts" element={<ContactsPage />} />
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute>
+              <ContactsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="register"
+          element={
+            <PublicRoute>
+              <Register />
+            </PublicRoute>
+          }
+        />
       </Route>
     </Routes>
   );

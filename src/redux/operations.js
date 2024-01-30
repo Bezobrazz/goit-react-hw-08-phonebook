@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-// axios.defaults.baseURL = 'https://65b264219bfb12f6eafda298.mockapi.io/';
+// kevin.lee@mail.net
 
 axios.defaults.baseURL = 'https://connections-api.herokuapp.com/';
 
@@ -87,7 +87,7 @@ export const refreshThunk = createAsyncThunk(
   'refreshUser',
   async (_, thunkAPI) => {
     const token = thunkAPI.getState().auth.token;
-    if (!token) return;
+    if (!token) return thunkAPI.rejectWithValue('Have no token');
     try {
       setAuthHeader(token);
       const { data } = await axios.get('users/current');
