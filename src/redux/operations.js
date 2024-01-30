@@ -57,3 +57,16 @@ export const registerThunk = createAsyncThunk(
     }
   }
 );
+
+export const loginThunk = createAsyncThunk(
+  'login',
+  async (credentials, thunkAPI) => {
+    try {
+      const { data } = await axios.post('users/login', credentials);
+      setAuthHeader(data.token);
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

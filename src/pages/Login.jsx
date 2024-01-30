@@ -8,10 +8,14 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
+import { loginThunk } from '../redux/operations';
 
 const defaultTheme = createTheme();
 
 export default function Login() {
+  const dispatch = useDispatch();
+
   const handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -19,6 +23,12 @@ export default function Login() {
       email: data.get('email'),
       password: data.get('password'),
     });
+    dispatch(
+      loginThunk({
+        email: data.get('email'),
+        password: data.get('password'),
+      })
+    );
     event.currentTarget.reset();
   };
 
