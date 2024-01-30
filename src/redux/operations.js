@@ -44,6 +44,9 @@ export const addContactsThunk = createAsyncThunk(
 export const setAuthHeader = token => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
+export const clearAuthHeader = () => {
+  axios.defaults.headers.common.Authorization = ``;
+};
 
 export const registerThunk = createAsyncThunk(
   'register',
@@ -70,3 +73,12 @@ export const loginThunk = createAsyncThunk(
     }
   }
 );
+
+export const logoutThunk = createAsyncThunk('logout', async (_, thunkAPI) => {
+  try {
+    await axios.post('users/logout');
+    clearAuthHeader();
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
