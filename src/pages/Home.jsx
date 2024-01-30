@@ -30,7 +30,7 @@ function Home() {
         </Typography>
         <Button variant="contained" color="primary" sx={{ marginTop: '20px' }}>
           <Link
-            to={!isLoggedIn ? 'login' : 'contacts'}
+            to="/contacts"
             style={{ color: 'inherit', textDecoration: 'none' }}
           >
             Get Started

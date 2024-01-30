@@ -34,16 +34,24 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(logoutThunk.fulfilled, state => {
-        state.user = {
-          name: '',
-          email: '',
-        };
-        state.token = null;
-        state.isLoggedIn = false;
+        // state.user = {
+        //   name: '',
+        //   email: '',
+        // };
+        // state.token = null;
+        // state.isLoggedIn = false;
+        return initialState;
+      })
+      .addCase(refreshThunk.pending, state => {
+        state.isRefreshing = true;
       })
       .addCase(refreshThunk.fulfilled, (state, { payload }) => {
         state.user = payload;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(refreshThunk.rejected, state => {
+        state.isRefreshing = false;
       });
   },
 });

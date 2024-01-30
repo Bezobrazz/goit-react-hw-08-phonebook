@@ -29,6 +29,7 @@ export default function Login() {
         password: data.get('password'),
       })
     );
+
     event.currentTarget.reset();
   };
 

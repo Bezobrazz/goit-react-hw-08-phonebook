@@ -8,7 +8,7 @@ const PrivateRoute = ({ children }) => {
   console.log(location);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   if (!isLoggedIn) {
-    return <Navigate state={{ from: location }} to="login" />;
+    return <Navigate state={{ from: location }} to="/login" />;
   }
   return children;
 };

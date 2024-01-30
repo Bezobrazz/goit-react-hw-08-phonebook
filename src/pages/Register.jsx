@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 import { registerThunk } from '../redux/operations';
+import { Notify } from 'notiflix';
 
 const defaultTheme = createTheme();
 
@@ -19,19 +20,26 @@ export default function Register() {
   const handleSubmit = event => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const name = data.get('name');
+    const email = data.get('email');
+    const password = data.get('password');
+
     console.log({
-      name: data.get('name'),
-      email: data.get('email'),
-      password: data.get('password'),
+      name,
+      email,
+      password,
     });
-    dispatch(
-      registerThunk({
-        name: data.get('name'),
-        email: data.get('email'),
-        password: data.get('password'),
+
+    dispatch(registerThunk({ name, email, password }))
+      .unwrap()
+      .then(() => {
+        Notify.success(`Welcome ${name}`);
+        event.currentTarget.reset();
       })
-    );
-    event.currentTarget.reset();
+      .catch(error => {
+        Notify.failure('User already exists');
+        console.error('Error during registration:', error);
+      });
   };
 
   return (
