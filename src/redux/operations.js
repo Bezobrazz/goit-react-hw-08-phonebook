@@ -41,11 +41,16 @@ export const addContactsThunk = createAsyncThunk(
   }
 );
 
+export const setAuthHeader = token => {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
+
 export const registerThunk = createAsyncThunk(
   'register',
   async (credentials, thunkAPI) => {
     try {
       const { data } = await axios.post('users/signup', credentials);
+      setAuthHeader(data.token);
       return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

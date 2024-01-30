@@ -24,7 +24,13 @@ export default function Register() {
       email: data.get('email'),
       password: data.get('password'),
     });
-    dispatch(registerThunk(data));
+    dispatch(
+      registerThunk({
+        name: data.get('name'),
+        email: data.get('email'),
+        password: data.get('password'),
+      })
+    );
     event.currentTarget.reset();
   };
 
