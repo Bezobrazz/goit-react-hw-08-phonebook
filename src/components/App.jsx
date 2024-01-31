@@ -52,9 +52,10 @@ const App = () => {
             <Route
               path="contacts"
               element={
-                <PrivateRoute>
-                  <LazyContactsPage />
-                </PrivateRoute>
+                <PrivateRoute
+                  component={<LazyContactsPage />}
+                  redirectTo="/login"
+                />
               }
             />
             <Route
