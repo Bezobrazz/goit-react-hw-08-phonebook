@@ -1,19 +1,14 @@
-import React, { useEffect } from 'react';
 import { StyledList, StyledListItem, BoldText } from './styled';
 import { Button } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { selectLoading, selectFilteredContacts } from '../redux/selectors';
-import { deletetContactsThunk, fetchContacts } from '../redux/operations';
+import { deletetContactsThunk } from '../redux/operations';
 
 const ContactList = () => {
   const contacts = useSelector(selectFilteredContacts);
   const loading = useSelector(selectLoading);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
 
   return (
     <StyledList>
