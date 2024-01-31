@@ -61,17 +61,16 @@ const App = () => {
             <Route
               path="login"
               element={
-                <PublicRoute>
-                  <LazyLogin />
-                </PublicRoute>
+                <PublicRoute component={<LazyLogin />} redirectTo="/contacts" />
               }
             />
             <Route
               path="register"
               element={
-                <PublicRoute>
-                  <LazyRegister />
-                </PublicRoute>
+                <PublicRoute
+                  component={<LazyRegister />}
+                  redirectTo="/contacts"
+                />
               }
             />
           </Route>
