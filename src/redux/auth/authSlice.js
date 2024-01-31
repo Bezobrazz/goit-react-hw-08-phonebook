@@ -34,12 +34,6 @@ const authSlice = createSlice({
         state.isLoggedIn = true;
       })
       .addCase(logoutThunk.fulfilled, state => {
-        // state.user = {
-        //   name: '',
-        //   email: '',
-        // };
-        // state.token = null;
-        // state.isLoggedIn = false;
         return initialState;
       })
       .addCase(refreshThunk.pending, state => {

@@ -7,7 +7,7 @@ const PublicRoute = ({ children }) => {
   const location = useLocation();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   if (isLoggedIn) {
-    return <Navigate to={location.state?.from || '/contacts'} />;
+    return <Navigate to={location.state?.from || '/'} />;
   }
   return children;
 };
